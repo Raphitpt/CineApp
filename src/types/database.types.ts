@@ -14,41 +14,76 @@ export type Database = {
   }
   public: {
     Tables: {
-      films: {
+      movies: {
         Row: {
-          affiche_url: string | null
-          annee: number | null
+          category: string
           created_at: string | null
           description: string | null
-          duree: number | null
-          genre: string[] | null
+          duration: number
           id: string
-          note: number | null
-          titre: string
+          poster_url: string | null
+          rating: number | null
+          title: string
+          year: number | null
         }
         Insert: {
-          affiche_url?: string | null
-          annee?: number | null
+          category: string
           created_at?: string | null
           description?: string | null
-          duree?: number | null
-          genre?: string[] | null
+          duration: number
           id?: string
-          note?: number | null
-          titre: string
+          poster_url?: string | null
+          rating?: number | null
+          title: string
+          year?: number | null
         }
         Update: {
-          affiche_url?: string | null
-          annee?: number | null
+          category?: string
           created_at?: string | null
           description?: string | null
-          duree?: number | null
-          genre?: string[] | null
+          duration?: number
           id?: string
-          note?: number | null
-          titre?: string
+          poster_url?: string | null
+          rating?: number | null
+          title?: string
+          year?: number | null
         }
         Relationships: []
+      }
+      sessions: {
+        Row: {
+          booked: number
+          capacity: number
+          created_at: string | null
+          id: string
+          movie_id: string | null
+          time: string
+        }
+        Insert: {
+          booked?: number
+          capacity?: number
+          created_at?: string | null
+          id?: string
+          movie_id?: string | null
+          time: string
+        }
+        Update: {
+          booked?: number
+          capacity?: number
+          created_at?: string | null
+          id?: string
+          movie_id?: string | null
+          time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessions_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
