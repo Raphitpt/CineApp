@@ -1,12 +1,14 @@
-<script>
+<script lang="ts">
+import { type PropType } from "vue";
 import { RouterLink } from "vue-router";
+import type { Movie } from "@/types/movie";
 
 export default {
   components: { RouterLink },
 
   props: {
     movie: {
-      type: Object,
+      type: Object as PropType<Movie>,
       required: true,
     },
   },
