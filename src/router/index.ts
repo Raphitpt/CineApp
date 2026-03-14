@@ -1,10 +1,10 @@
-import FilmList from "@/FilmList.vue";
-import FilmSession from "@/FilmSession.vue";
+import MovieList from "@/MovieList.vue";
+import MovieSession from "@/MovieSession.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/", component: FilmList },
-  { path: "/seances/:movieId", component: FilmSession },
+  { path: "/", component: MovieList },
+  { path: "/seances/:movieId", component: MovieSession },
 ];
 
 const router = createRouter({
