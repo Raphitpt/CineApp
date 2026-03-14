@@ -44,6 +44,14 @@ export default {
       <p v-if="movie.description" class="text-sm text-slate-500 mt-3 line-clamp-2">
         {{ movie.description }}
       </p>
+
+      <RouterLink :to="`/seances/${movie.id}`">
+        <button
+          class="mt-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+        >
+          Voir les séances
+        </button>
+      </RouterLink>
     </div>
   </div>
 </template>
