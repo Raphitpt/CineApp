@@ -41,7 +41,9 @@ const moviesLength = computed(() => renderedMovies.value.length);
         :key="movie.id"
         :movie="movie"
         class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-      />
+      >
+        <Movie :movie="movie" />
+      </div>
     </div>
 
     <div v-else class="text-center mt-20 text-slate-400 text-lg">Aucun film disponible.</div>
