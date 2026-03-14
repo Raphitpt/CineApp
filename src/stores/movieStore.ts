@@ -8,6 +8,7 @@ export const useMoviesStore = defineStore("movies", () => {
   const movies = ref<Movie[]>([]);
   const loading = ref<boolean>(false);
   const error = ref<string | null>(null);
+  const currentMovie = ref<Movie | null>(null);
 
   async function fetchMovies(): Promise<void> {
     loading.value = true;
@@ -24,5 +25,21 @@ export const useMoviesStore = defineStore("movies", () => {
     loading.value = false;
   }
 
-  return { movies, loading, error, fetchMovies };
+  async function fetchMovieDetails(movieId: string): Promise<void> {
+    loading.value = true;
+    error.value = null;
+
+    const { data, error: err } = await supabase
+      .from("movies")
+      .select("*, sessions(*)")
+      .eq("id", movieId)
+      .single();
+
+    loading.value = false;
+
+    if (err) error.value = err.message;
+    else currentMovie.value = data as Movie;
+  }
+
+  return { movies, currentMovie, loading, error, fetchMovies, fetchMovieDetails };
 });
