@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from "vue";
-import { useMoviesStore } from "./stores/movieStore";
+import { useMoviesStore } from "@/stores/movieStore";
 import MovieFilter from "./MovieFilter.vue";
-import Movie from "./components/Movie.vue";
+import Movie from "./Movie.vue";
 
 const store = useMoviesStore();
 onMounted(() => store.fetchMovies());

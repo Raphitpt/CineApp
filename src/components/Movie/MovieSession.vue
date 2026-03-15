@@ -1,9 +1,9 @@
 <script>
-import { useMoviesStore } from "./stores/movieStore";
+import { useMoviesStore } from "@/stores/movieStore";
 import { mapState } from "pinia";
 
 export default {
-  name: "FilmSession",
+  name: "MovieSession",
   computed: {
     ...mapState(useMoviesStore, ["currentMovie", "loading", "error"]),
   },
@@ -53,7 +53,7 @@ export default {
           </div>
 
           <p v-if="currentMovie.description" class="text-sm text-slate-500 leading-relaxed">
-            <span></span>{{ currentMovie.description }}
+            <span v-dompurify-html="currentMovie.description"></span>
           </p>
         </div>
       </div>

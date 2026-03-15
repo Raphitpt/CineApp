@@ -45,8 +45,7 @@ export default {
         {{ movie.category }}
       </span>
 
-      <p v-if="movie.description" class="text-sm text-slate-500 mt-3 line-clamp-2">
-        {{ movie.description }}
+      <p v-if="movie.description" v-dompurify-html="movie.description" class="text-sm text-slate-500 mt-3 line-clamp-2">
       </p>
       <RouterLink :to="`/seances/${movie.id}`">
         <button

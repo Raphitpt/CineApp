@@ -1,5 +1,5 @@
-import MovieList from "@/MovieList.vue";
-import MovieSession from "@/MovieSession.vue";
+import MovieList from "@/components/Movie/MovieList.vue";
+import MovieSession from "@/components/Movie/MovieSession.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
