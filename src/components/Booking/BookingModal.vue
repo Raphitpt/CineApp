@@ -11,6 +11,9 @@ export default {
   data() {
     return { seats: 1 }
   },
+  mounted() {
+    useBookingStore().error = null
+  },
   computed: {
     store() { return useBookingStore() },
     remainingSeats() { return this.session.capacity - this.session.booked },

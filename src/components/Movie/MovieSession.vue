@@ -29,6 +29,11 @@ export default {
     const authStore = useAuthStore()
     if (authStore.user) useBookingStore().fetchUserBookings()
   },
+  watch: {
+    user(newUser: import('@supabase/supabase-js').User | null) {
+      if (newUser) useBookingStore().fetchUserBookings()
+    },
+  },
   methods: {
     sessionState(session: import('@/types/movie').Session): 'available' | 'booked' | 'full' {
       if (this.bookedSessionIds.has(session.id)) return 'booked'
