@@ -85,6 +85,45 @@ export type Database = {
           },
         ]
       }
+      bookings: {
+        Row: {
+          id: string
+          user_id: string
+          session_id: string
+          seats: number
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          session_id: string
+          seats: number
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          session_id?: string
+          seats?: number
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
