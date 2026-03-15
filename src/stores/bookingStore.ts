@@ -26,8 +26,7 @@ export const useBookingStore = defineStore('bookings', () => {
     error.value = null
     const { error: err } = await supabase
       .from('bookings')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .insert({ session_id: sessionId, seats } as any)
+      .insert({ session_id: sessionId, seats })
     loading.value = false
     if (err) { error.value = err.message; return false }
     // Refresh session counters in movie store

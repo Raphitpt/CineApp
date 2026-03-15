@@ -95,7 +95,7 @@ export type Database = {
         }
         Insert: {
           id?: string
-          user_id: string
+          user_id?: string
           session_id: string
           seats: number
           created_at?: string | null
