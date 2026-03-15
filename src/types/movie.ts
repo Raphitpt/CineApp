@@ -27,6 +27,6 @@ export interface Booking {
   user_id: string
   session_id: string
   seats: number
-  created_at: string
+  created_at: string | null
   session?: Session & { movie?: Movie }
 }
