@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Movie } from "./types/movie";
+import type { Movie } from "@/types/movie";
 
 export default {
   emits: ["update-movies"],
@@ -31,16 +31,14 @@ export default {
         result = result.filter((movie) => movie.category === this.category);
       }
 
-      // Filtre par note minimale
       if (this.minRating > 0) {
-        result = result.filter((movie) => movie.rating >= this.minRating);
+        result = result.filter((movie) => (movie.rating ?? 0) >= this.minRating);
       }
 
-      // Filtre par période
       if (this.era === "recent") {
-        result = result.filter((movie) => movie.year >= 2015);
+        result = result.filter((movie) => (movie.year ?? 0) >= 2015);
       } else if (this.era === "classic") {
-        result = result.filter((movie) => movie.year < 2000);
+        result = result.filter((movie) => (movie.year ?? 9999) < 2000);
       }
 
       return result;
@@ -53,11 +51,11 @@ export default {
         case "titleDesc":
           return result.sort((a, b) => b.title.localeCompare(a.title));
         case "yearDesc":
-          return result.sort((a, b) => b.year - a.year);
+          return result.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
         case "yearAsc":
-          return result.sort((a, b) => a.year - b.year);
+          return result.sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
         case "ratingDesc":
-          return result.sort((a, b) => b.rating - a.rating);
+          return result.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
         case "durationAsc":
           return result.sort((a, b) => a.duration - b.duration);
         default:
@@ -79,7 +77,7 @@ export default {
 <template>
   <aside class="mb-10">
     <div class="flex flex-wrap gap-3 items-end">
-      <div class="flex flex-col gap-1.5 min-w-[220px] flex-1">
+      <div class="flex flex-col gap-1.5 min-w-55 flex-1">
         <label class="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           Recherche
         </label>
@@ -103,7 +101,7 @@ export default {
         </div>
       </div>
 
-      <div class="flex flex-col gap-1.5 min-w-[160px]">
+      <div class="flex flex-col gap-1.5 min-w-40">
         <label class="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           Catégorie
         </label>
@@ -116,7 +114,7 @@ export default {
         </select>
       </div>
 
-      <div class="flex flex-col gap-1.5 min-w-[180px]">
+      <div class="flex flex-col gap-1.5 min-w-45">
         <label class="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           Trier par
         </label>
@@ -160,14 +158,14 @@ export default {
         </div>
       </div>
 
-      <div class="flex flex-col gap-1.5 min-w-[160px]">
+      <div class="flex flex-col gap-1.5 min-w-40">
         <label class="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
           Note min.
           <span class="ml-1 text-slate-600 font-bold normal-case tracking-normal">
             {{ minRating > 0 ? `≥ ${minRating}` : "Toutes" }}
           </span>
         </label>
-        <div class="flex items-center gap-2.5 px-1 py-2.5">
+        <div class="flex items-center gap-2.5 px-1 py-4">
           <span class="text-xs text-slate-300">0</span>
           <input
             type="range"

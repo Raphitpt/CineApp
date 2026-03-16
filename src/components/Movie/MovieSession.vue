@@ -1,15 +1,14 @@
-<script>
-import { useMoviesStore } from "./stores/movieStore";
+<script lang="ts">
+import { useMoviesStore } from "@/stores/movieStore";
 import { mapState } from "pinia";
 
 export default {
-  name: "FilmSession",
   computed: {
     ...mapState(useMoviesStore, ["currentMovie", "loading", "error"]),
   },
   mounted() {
     const store = useMoviesStore();
-    store.fetchMovieDetails(this.$route.params.movieId);
+    store.fetchMovieDetails(this.$route.params.movieId as string);
   },
 };
 </script>
@@ -53,7 +52,7 @@ export default {
           </div>
 
           <p v-if="currentMovie.description" class="text-sm text-slate-500 leading-relaxed">
-            <span></span>{{ currentMovie.description }}
+            <span v-dompurify-html="currentMovie.description"></span>
           </p>
         </div>
       </div>
@@ -67,13 +66,11 @@ export default {
             :key="session.id"
             class="bg-white border border-slate-200 rounded-2xl p-4 cursor-pointer hover:border-slate-400 transition-colors"
           >
-            <p class="text-xs text-slate-500 mb-1">{{ session.date }}</p>
             <p class="text-xl font-medium text-slate-900 mb-2">{{ session.time }}</p>
             <div class="flex items-center justify-between">
               <span class="text-xs px-2 py-0.5 rounded-lg bg-green-50 text-green-700"
                 >Disponible</span
               >
-              <span class="text-xs text-slate-500">{{ session.room }}</span>
             </div>
           </div>
         </div>
