@@ -21,3 +21,12 @@ export interface Movie {
 
 export type MovieInsert = Omit<Movie, 'id' | 'created_at' | 'sessions'>
 export type SessionInsert = Omit<Session, 'id'>
+
+export interface Booking {
+  id: string
+  user_id: string
+  session_id: string
+  seats: number
+  created_at: string | null
+  session?: Session & { movie?: Movie }
+}
