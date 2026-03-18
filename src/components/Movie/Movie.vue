@@ -21,7 +21,7 @@ export default {
       v-if="movie.poster_url"
       :src="movie.poster_url"
       :alt="movie.title"
-      class="w-full h-56 object-cover"
+      class="w-full h-100 object-cover fit"
     />
     <div
       v-else
@@ -45,11 +45,14 @@ export default {
         {{ movie.category }}
       </span>
 
-      <p v-if="movie.description" v-dompurify-html="movie.description" class="text-sm text-slate-500 mt-3 line-clamp-2">
-      </p>
+      <p
+        v-if="movie.description"
+        v-dompurify-html="movie.description"
+        class="text-sm text-slate-500 mt-3 line-clamp-2"
+      ></p>
       <RouterLink :to="`/seances/${movie.id}`">
         <button
-          class="mt-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+          class="mt-2 bg-slate-900 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
         >
           Voir les séances
         </button>
