@@ -34,7 +34,7 @@ export default defineComponent({
 <template>
   <section class="max-w-7xl mx-auto px-5 py-10">
     <header class="text-center mb-10">
-      <h1 class="text-4xl font-bold text-slate-900">Nos films</h1>
+      <h1 class="text-4xl font-bold text-slate-900">Nos films à l'affiche</h1>
       <p class="text-slate-500 mt-2">{{ moviesLength }} films disponibles</p>
     </header>
 
