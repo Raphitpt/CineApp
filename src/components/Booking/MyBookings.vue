@@ -1,23 +1,35 @@
 <script lang="ts">
-import { useBookingStore } from '@/stores/bookingStore'
-import { mapState } from 'pinia'
+import { useBookingStore } from "@/stores/bookingStore";
+import { mapState } from "pinia";
 
 export default {
+  data() {
+    return {
+      cancellingBookingId: null as string | null,
+    };
+  },
   computed: {
-    ...mapState(useBookingStore, ['bookings', 'loading', 'error']),
+    ...mapState(useBookingStore, ["bookings", "loading", "error"]),
   },
   mounted() {
-    useBookingStore().fetchUserBookings()
+    useBookingStore().fetchUserBookings();
   },
   methods: {
     async cancel(bookingId: string) {
-      await useBookingStore().cancelBooking(bookingId)
+      const deleteOk = await useBookingStore().cancelBooking(bookingId);
+      if (deleteOk) {
+        this.cancellingBookingId = null;
+      }
     },
     formatDate(dateStr: string) {
-      return new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+      return new Date(dateStr).toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
     },
   },
-}
+};
 </script>
 
 <template>
@@ -39,16 +51,35 @@ export default {
       >
         <div class="flex-1 min-w-0">
           <p class="text-sm font-medium text-slate-900 truncate">
-            {{ booking.session?.movie?.title ?? '—' }}
+            {{ booking.session?.movie?.title ?? "—" }}
           </p>
           <p class="text-xs text-slate-500 mt-0.5">
-            Séance {{ booking.session?.time ?? '—' }} · {{ booking.seats }} place{{ booking.seats > 1 ? 's' : '' }}
+            Séance {{ booking.session?.time ?? "—" }} · {{ booking.seats }} place{{
+              booking.seats > 1 ? "s" : ""
+            }}
           </p>
-          <p class="text-xs text-slate-400 mt-0.5">Réservé le {{ formatDate(booking.created_at ?? '') }}</p>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Réservé le {{ formatDate(booking.created_at ?? "") }}
+          </p>
+        </div>
+        <div v-if="cancellingBookingId === booking.id">
+          <button
+            @click="cancel(booking.id)"
+            class="shrink-0 text-xs text-slate-500 hover:text-red-600 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-red-200 hover:bg-red-50 transition-colors"
+          >
+            Confirmer
+          </button>
+          <button
+            @click="cancellingBookingId = null"
+            class="text-xs text-slate-400 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors"
+          >
+            ✕
+          </button>
         </div>
 
         <button
-          @click="cancel(booking.id)"
+          v-else
+          @click="cancellingBookingId = booking.id"
           class="shrink-0 text-xs text-slate-500 hover:text-red-600 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-red-200 hover:bg-red-50 transition-colors"
         >
           Annuler
