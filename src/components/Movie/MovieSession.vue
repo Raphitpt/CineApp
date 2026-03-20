@@ -5,9 +5,10 @@ import { useBookingStore } from "@/stores/bookingStore";
 import { mapState } from "pinia";
 import BookingModal from "@/components/Booking/BookingModal.vue";
 import AuthModal from "@/components/Auth/AuthModal.vue";
+import MovieReview from "./MovieReview.vue";
 
 export default {
-  components: { BookingModal, AuthModal },
+  components: { BookingModal, AuthModal, MovieReview },
   data() {
     return {
       selectedSession: null as import("@/types/movie").Session | null,
@@ -186,5 +187,6 @@ export default {
       @booked="showBookingModal = false"
     />
     <AuthModal v-if="showAuthModal" @close="showAuthModal = false" />
+    <MovieReview :movie-id="$route.params.movieId as string" />
   </div>
 </template>

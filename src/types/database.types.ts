@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      bookings: {
+        Row: {
+          created_at: string | null
+          id: string
+          seats: number
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          seats: number
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          seats?: number
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       movies: {
         Row: {
           category: string
@@ -50,6 +82,44 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          author: string
+          comment: string
+          created_at: string | null
+          id: string
+          movie_id: string
+          rating: number
+          user_id: string
+        }
+        Insert: {
+          author: string
+          comment: string
+          created_at?: string | null
+          id?: string
+          movie_id: string
+          rating: number
+          user_id: string
+        }
+        Update: {
+          author?: string
+          comment?: string
+          created_at?: string | null
+          id?: string
+          movie_id?: string
+          rating?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sessions: {
         Row: {
           booked: number
@@ -83,45 +153,6 @@ export type Database = {
             referencedRelation: "movies"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      bookings: {
-        Row: {
-          id: string
-          user_id: string
-          session_id: string
-          seats: number
-          created_at: string | null
-        }
-        Insert: {
-          id?: string
-          user_id?: string
-          session_id: string
-          seats: number
-          created_at?: string | null
-        }
-        Update: {
-          id?: string
-          user_id?: string
-          session_id?: string
-          seats?: number
-          created_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "bookings_session_id_fkey"
-            columns: ["session_id"]
-            isOneToOne: false
-            referencedRelation: "sessions"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "bookings_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
         ]
       }
     }
