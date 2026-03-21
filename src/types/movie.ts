@@ -1,7 +1,7 @@
 export interface Session {
   id: string
   movie_id: string
-  time: string
+  date_time: string
   capacity: number
   booked: number
 }

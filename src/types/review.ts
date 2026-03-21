@@ -6,3 +6,7 @@ export interface Review {
   rating: number;
   created_at: string;
 }
+
+export interface ReviewWithMovie extends Review {
+  movie?: { title: string }
+}
