@@ -17,10 +17,16 @@ export default {
     isBasePath() {
       return this.$route.path === "/";
     },
+    isAdmin() {
+      return this.store.isAdmin;
+    },
   },
   methods: {
     async logout() {
       await this.store.logout();
+      if (this.$route.meta.requiresAuth) {
+        this.$router.push('/')
+      }
     },
   },
 };
@@ -75,6 +81,13 @@ export default {
           class="text-sm text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors"
         >
           Mes réservations
+        </RouterLink>
+        <RouterLink
+          v-if="isAdmin"
+          to="/admin"
+          class="text-sm text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+        >
+          Admin
         </RouterLink>
         <button
           @click="logout"

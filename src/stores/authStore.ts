@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 
@@ -41,5 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
   }
 
-  return { user, loading, error, authReady, initAuth, login, register, logout }
+  const isAdmin = computed(() => user.value?.app_metadata?.role === 'admin')
+
+  return { user, loading, error, authReady, isAdmin, initAuth, login, register, logout }
 })

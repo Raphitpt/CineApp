@@ -63,6 +63,9 @@ export default {
         await useMoviesStore().fetchMovieDetails(this.$route.params.movieId as string);
       }
     },
+    formatDate(t: string) {
+      return new Date(t).toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' })
+    },
   },
 };
 </script>
@@ -121,7 +124,7 @@ export default {
               'border-slate-100 opacity-60': sessionState(session) === 'full',
             }"
           >
-            <p class="text-xl font-medium text-slate-900 mb-1">{{ session.time }}</p>
+            <p class="text-xl font-medium text-slate-900 mb-1">{{ formatDate(session.date_time) }}</p>
             <p class="text-xs text-slate-400 mb-3">
               {{ session.capacity - session.booked }} / {{ session.capacity }} places
             </p>

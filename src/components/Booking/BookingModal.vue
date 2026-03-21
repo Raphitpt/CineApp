@@ -33,7 +33,7 @@ export default {
   <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40" @click.self="$emit('close')">
     <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
       <h2 class="text-lg font-semibold text-slate-900 mb-1">Réserver</h2>
-      <p class="text-sm text-slate-500 mb-5">Séance {{ session.time }} · {{ remainingSeats }} place{{ remainingSeats > 1 ? 's' : '' }} restante{{ remainingSeats > 1 ? 's' : '' }}</p>
+      <p class="text-sm text-slate-500 mb-5">Séance {{ session.date_time }} · {{ remainingSeats }} place{{ remainingSeats > 1 ? 's' : '' }} restante{{ remainingSeats > 1 ? 's' : '' }}</p>
 
       <div class="flex items-center gap-3 mb-5">
         <label class="text-sm text-slate-700">Nombre de places</label>
