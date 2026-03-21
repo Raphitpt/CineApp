@@ -1,98 +1,96 @@
-# vue-project
+# CinéApp
 
-This template should help get you started developing with Vue 3 in Vite.
+Application web de réservation de séances de cinéma.
 
-## Recommended IDE Setup
+## Fonctionnalités
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Parcourir le catalogue de films avec filtres et tri
+- Consulter les séances disponibles par film
+- Réserver des places (compte requis)
+- Gérer ses réservations
+- Laisser un avis sur les films
+- Panel d'administration pour gérer le contenu
 
-## Recommended Browser Setup
+## Stack
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Vue 3** — Composition API & Options API
+- **Pinia** — gestion d'état
+- **Vue Router** — navigation et protection des routes
+- **Supabase** — base de données PostgreSQL, authentification, Edge Functions
+- **Tailwind CSS v4** — styles
+- **TypeScript** — typage statique
+- **Vite** — bundler
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-### 1. Installer les dépendances
+## Installation
 
 ```sh
 bun install
 ```
 
-### 2. Variables d'environnement
-
-Copie le fichier `.env.example` et remplis les valeurs :
+Copier le fichier `.env.example` et remplir les valeurs :
 
 ```sh
 cp .env.example .env
 ```
 
-Les clés supabase sont ont été transmises en amont (insta)
+| Variable | Description |
+|----------|-------------|
+| `VITE_SUPABASE_URL` | URL du projet Supabase |
+| `VITE_SUPABASE_ANON_KEY` | Clé publique anon |
 
-| Variable                 | Description                   |
-| ------------------------ | ----------------------------- |
-| `VITE_SUPABASE_URL`      | URL du projet Supabase        |
-| `VITE_SUPABASE_ANON_KEY` | Clé publique anon/publishable |
-
-### 3. Base de données
-
-Le projet utilise [Supabase](https://supabase.com) comme base de données. Pour initialiser la table `films`, exécute ce SQL dans **Supabase → SQL Editor** :
-
-```sql
-create table films (
-  id uuid default gen_random_uuid() primary key,
-  titre text not null,
-  description text,
-  genre text[],
-  annee int,
-  note float,
-  duree int,
-  affiche_url text,
-  created_at timestamp default now()
-);
-
--- Données de test
-insert into films (titre, genre, annee, note, duree) values
-  ('Inception', array['sci-fi', 'thriller'], 2010, 8.8, 148),
-  ('The Dark Knight', array['action', 'thriller'], 2008, 9.0, 152),
-  ('Interstellar', array['sci-fi', 'drame'], 2014, 8.6, 169);
-```
-
-### 4. Générer les types TypeScript (optionnel)
-
-Si tu modifies le schéma Supabase, regénère les types :
-
-```sh
-bunx supabase login
-bunx supabase gen types typescript --project-id ton_project_id > src/types/database.types.ts
-```
-
-### 5. Lancer le projet
+## Développement
 
 ```sh
 bun dev
 ```
 
-### Compiler pour la production
+## Build
 
 ```sh
 bun run build
 ```
 
-### Lint avec [ESLint](https://eslint.org/)
+## Structure
+
+```
+src/
+├── components/
+│   ├── Admin/        # Panel d'administration
+│   ├── Auth/         # Connexion / inscription
+│   ├── Booking/      # Réservation et mes réservations
+│   └── Movie/        # Liste des films et séances
+├── stores/           # Pinia (auth, films, réservations, avis, admin)
+├── router/           # Routes et guards
+├── types/            # Types TypeScript
+└── lib/              # Client Supabase
+```
+
+## Rôles
+
+| Rôle | Accès |
+|------|-------|
+| Visiteur | Consultation des films et séances |
+| Membre | + Réservation, avis |
+| Admin | + Panel `/admin` |
+
+Pour promouvoir un utilisateur admin via Supabase SQL Editor :
+
+```sql
+UPDATE auth.users
+SET raw_app_meta_data = raw_app_meta_data || '{"role": "admin"}'::jsonb
+WHERE email = 'user@example.com';
+```
+
+## Edge Functions
 
 ```sh
-bun lint
+supabase functions deploy admin-users
+```
+
+## Types Supabase
+
+Si le schéma change, regénérer les types :
+
+```sh
+bunx supabase gen types typescript --project-id <project_id> > src/types/database.types.ts
 ```
