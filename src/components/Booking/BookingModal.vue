@@ -1,39 +1,70 @@
 <script lang="ts">
-import { useBookingStore } from '@/stores/bookingStore'
-import type { Session } from '@/types/movie'
+import { useBookingStore } from "@/stores/bookingStore";
+import type { Session } from "@/types/movie";
 
 export default {
   props: {
     session: { type: Object as () => Session, required: true },
     movieId: { type: String, required: true },
   },
-  emits: ['close', 'booked'],
+  emits: ["close", "booked"],
   data() {
-    return { seats: 1 }
+    return { seats: 1 };
   },
   mounted() {
-    useBookingStore().error = null
+    useBookingStore().error = null;
   },
   computed: {
-    store() { return useBookingStore() },
-    remainingSeats() { return this.session.capacity - this.session.booked },
-    error() { return this.store.error },
-    loading() { return this.store.loading },
+    store() {
+      return useBookingStore();
+    },
+    remainingSeats() {
+      return this.session.capacity - this.session.booked;
+    },
+    error() {
+      return this.store.error;
+    },
+    loading() {
+      return this.store.loading;
+    },
   },
   methods: {
     async confirm() {
-      const ok = await this.store.book(this.session.id, this.seats, this.movieId)
-      if (ok) { this.$emit('booked'); this.$emit('close') }
+      const ok = await this.store.book(this.session.id, this.seats, this.movieId);
+      if (ok) {
+        this.$emit("booked");
+        this.$emit("close");
+      }
+    },
+    formatDate(dateStr: string) {
+      const date = new Date(dateStr);
+
+      return date.toLocaleString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "UTC",
+      });
     },
   },
-}
+};
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40" @click.self="$emit('close')">
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+    @click.self="$emit('close')"
+  >
     <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
       <h2 class="text-lg font-semibold text-slate-900 mb-1">Réserver</h2>
-      <p class="text-sm text-slate-500 mb-5">Séance {{ session.date_time }} · {{ remainingSeats }} place{{ remainingSeats > 1 ? 's' : '' }} restante{{ remainingSeats > 1 ? 's' : '' }}</p>
+      <p class="text-sm text-slate-500 mb-5">
+        Séance {{ formatDate(session.date_time) }} · {{ remainingSeats }} place{{
+          remainingSeats > 1 ? "s" : ""
+        }}
+        restante{{ remainingSeats > 1 ? "s" : "" }}
+      </p>
 
       <div class="flex items-center gap-3 mb-5">
         <label class="text-sm text-slate-700">Nombre de places</label>
@@ -60,7 +91,7 @@ export default {
           :disabled="loading || seats < 1 || seats > remainingSeats"
           class="flex-1 text-sm font-medium bg-slate-900 text-white rounded-lg py-2 hover:bg-slate-700 disabled:opacity-50 transition-colors"
         >
-          {{ loading ? '...' : 'Confirmer' }}
+          {{ loading ? "..." : "Confirmer" }}
         </button>
       </div>
     </div>
