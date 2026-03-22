@@ -22,10 +22,15 @@ export default {
       }
     },
     formatDate(dateStr: string) {
-      return new Date(dateStr).toLocaleDateString("fr-FR", {
+      const date = new Date(dateStr);
+
+      return date.toLocaleString("fr-FR", {
         day: "numeric",
         month: "long",
         year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "UTC",
       });
     },
   },
@@ -54,7 +59,7 @@ export default {
             {{ booking.session?.movie?.title ?? "—" }}
           </p>
           <p class="text-xs text-slate-500 mt-0.5">
-            Séance {{ booking.session?.date_time ?? "—" }} · {{ booking.seats }} place{{
+            Séance {{ formatDate(booking.session?.date_time) ?? "—" }} · {{ booking.seats }} place{{
               booking.seats > 1 ? "s" : ""
             }}
           </p>
