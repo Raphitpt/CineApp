@@ -60,8 +60,9 @@ export default {
             <td class="py-2 pr-4 text-slate-500">{{ movie.category }}</td>
             <td class="py-2 pr-4 text-slate-500">{{ movie.year }}</td>
             <td class="py-2 pr-4">
-              <button @click="sessionMovie = movie" class="text-xs text-slate-500 hover:text-slate-800 border border-slate-200 px-2 py-1 rounded">
-                {{ movie.sessions?.length ?? 0 }} séance(s)
+              <button @click="sessionMovie = movie" class="text-xs text-slate-500 hover:text-slate-800 border border-slate-200 px-2 py-1 rounded flex items-center gap-1">
+                <span>{{ movie.sessions?.length ?? 0 }} séance(s)</span>
+                <span class="text-slate-400">· Éditer</span>
               </button>
             </td>
             <td class="py-2">
