@@ -59,7 +59,7 @@ export default {
             {{ booking.session?.movie?.title ?? "—" }}
           </p>
           <p class="text-xs text-slate-500 mt-0.5">
-            Séance {{ formatDate(booking.session?.date_time) ?? "—" }} · {{ booking.seats }} place{{
+            Séance {{ booking.session?.date_time ? formatDate(booking.session.date_time) : "—" }} · {{ booking.seats }} place{{
               booking.seats > 1 ? "s" : ""
             }}
           </p>
