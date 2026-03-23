@@ -21,6 +21,12 @@ bun dev
 bun run build
 ```
 
+## Test
+
+```sh
+bun run test
+```
+
 ## Stack
 
 - **Vue 3** — Composition API & Options API
